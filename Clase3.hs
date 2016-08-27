@@ -20,4 +20,8 @@ auxiliar :: Integer -> Integer -> Integer
 auxiliar 1 _ = 1
 auxiliar x y | ((x > 0) && (not (par x)) && ((x^2) < y)) = (x + (auxiliar (x-2) y))
 auxiliar x y | not (par x) = (auxiliar (x-2) y)
+<<<<<<< HEAD
 auxiliar x y | otherwise = (auxiliar (x-1) y)
+=======
+auxiliar x y | otherwise = (auxiliar (x-1) y)
+>>>>>>> origin/master
