@@ -13,12 +13,12 @@ igualdad :: Integer -> Integer -> Integer
 igualdad x y | y == 0 || x == y = 1
 			| otherwise = (igualdad (x-1) y) + (igualdad (x-1) (y-1))
 
-simcp :: Integer -> Integer
-simcp x | x==1 = 0
-simcp x |otherwise = tubiega x x
+ej4 :: Integer -> Integer
+ej4 x | x==1 = 0
+ej4 x |otherwise = auxiliar x x
 
-tubiega :: Integer -> Integer -> Integer
-tubiega 1 _ = 1
-tubiega x y | ((x > 0) && (not (par x)) && ((x^2) < y)) = (x + (tubiega (x-2) y))
-tubiega x y | not (par x) = (tubiega (x-2) y)
-tubiega x y | otherwise = (tubiega (x-1) y)
+auxiliar :: Integer -> Integer -> Integer
+auxiliar 1 _ = 1
+auxiliar x y | ((x > 0) && (not (par x)) && ((x^2) < y)) = (x + (auxiliar (x-2) y))
+auxiliar x y | not (par x) = (auxiliar (x-2) y)
+auxiliar x y | otherwise = (auxiliar (x-1) y)
