@@ -51,13 +51,20 @@ sincronizaConCodonDeFin [] = False
 sincronizaConCodonDeFin (U:(A:(A:xs))) = True
 sincronizaConCodonDeFin (U:(A:(G:xs))) = True
 sincronizaConCodonDeFin (U:(G:(A:xs))) = True
-sincronizaConCodonDeFin xs = sincronizaConCodonDeFin (tail xs)
+sincronizaConCodonDeFin (x:(y:(z:xs))) = sincronizaConCodonDeFin xs
+sincronizaConCodonDeFin xs = False
 
-{-obtenerProteinas :: CadenaDNA -> [Proteina]
+obtenerProteina :: CadenaRNA -> Proteina
+obtenerProteina [] = []
+obtenerProteina (x:(y:(z:xs))) = traducirCodonAAminoacido (x,y,z) : obtenerProteina xs
+
+{-
+obtenerProteinaDeRNA :: CadenaRNA -> [Proteina]
 obtenerProteinas = error "Implementar!!!"
 
-obtenerProteinaDeRNA :: CadenaRNA -> [Proteina]
-obtenerProteinaDeRNA = error "Implementar!!!"-}
+obtenerProteinas :: CadenaDNA -> [Proteina]
+obtenerProteinas = error "Implementar!!!"
+-}
 
 -- Funcion que dado un codon devuelve el correspondiente aminoacido
 traducirCodonAAminoacido:: Codon -> Aminoacido
