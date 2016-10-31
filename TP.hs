@@ -46,8 +46,18 @@ auxTrans [] = []
 auxTrans (T : xs) = U : (auxTrans xs)
 auxTrans (n : xs) = n : (auxTrans xs)
 
-obtenerProteinas :: CadenaDNA -> [Proteina]
-obtenerProteinas  = error "Implementar!!!"
+sincronizaConCodonDeFin :: CadenaRNA -> Bool
+sincronizaConCodonDeFin [] = False
+sincronizaConCodonDeFin (U:(A:(A:xs))) = True
+sincronizaConCodonDeFin (U:(A:(G:xs))) = True
+sincronizaConCodonDeFin (U:(G:(A:xs))) = True
+sincronizaConCodonDeFin xs = sincronizaConCodonDeFin (tail xs)
+
+{-obtenerProteinas :: CadenaDNA -> [Proteina]
+obtenerProteinas = error "Implementar!!!"
+
+obtenerProteinaDeRNA :: CadenaRNA -> [Proteina]
+obtenerProteinaDeRNA = error "Implementar!!!"-}
 
 -- Funcion que dado un codon devuelve el correspondiente aminoacido
 traducirCodonAAminoacido:: Codon -> Aminoacido
