@@ -47,23 +47,47 @@ auxTrans (n : xs) = n : (auxTrans xs)
 
 sincronizaConCodonDeFin :: CadenaRNA -> Bool
 sincronizaConCodonDeFin [] = False
-sincronizaConCodonDeFin (U:(A:(A:xs))) = True
-sincronizaConCodonDeFin (U:(A:(G:xs))) = True
-sincronizaConCodonDeFin (U:(G:(A:xs))) = True
-sincronizaConCodonDeFin (x:(y:(z:xs))) = sincronizaConCodonDeFin xs
+sincronizaConCodonDeFin (x:y:z:xs) = esCodonDeFin (x,y,z) || sincronizaConCodonDeFin xs
 sincronizaConCodonDeFin xs = False
 
 obtenerProteina :: CadenaRNA -> Proteina
 obtenerProteina [] = []
-obtenerProteina (x:(y:(z:xs))) = traducirCodonAAminoacido (x,y,z) : obtenerProteina xs
+obtenerProteina (x:y:z:xs) = traducirCodonAAminoacido (x,y,z) : obtenerProteina xs
 
-{-
+fraccionarCadenaRNA :: CadenaRNA -> [CadenaRNA]
+fraccionarCadenaRNA [] = []
+fraccionarCadenaRNA (A:U:G:xs) = xs:(fraccionarCadenaRNA xs)
+fraccionarCadenaRNA (x:xs) = (fraccionarCadenaRNA xs)
+
+-- Aux. Se asume que la cadena tiene fin
+quitarCola :: CadenaRNA -> CadenaRNA
+quitarCola (x:y:z:xs)	|esCodonDeFin (x,y,z) = []
+						|otherwise =  [x,y,z] ++ (quitarCola xs)
+
+limpiarLista :: [CadenaRNA] -> [CadenaRNA]
+limpiarLista [] = []
+limpiarLista ((x:y:z:c) : xs) 	|esCodonDeFin (x,y,z) = limpiarLista xs
+								|sincronizaConCodonDeFin (x:y:z:c) = (quitarCola (x:y:z:c)) : (limpiarLista xs)
+								|otherwise = limpiarLista xs
+limpiarLista (c:xs) = limpiarLista xs
+
+esCodonDeFin :: Codon -> Bool
+esCodonDeFin (U,A,A) = True
+esCodonDeFin (U,A,G) = True
+esCodonDeFin (U,G,A) = True
+esCodonDeFin _ = False
+
+-- Asume que la cadena es información sin codones
+obtenerProteinaDeRNAs :: [CadenaRNA] -> [Proteina]
+obtenerProteinaDeRNAs [] = []
+obtenerProteinaDeRNAs (x:xs) = (obtenerProteina x) : (obtenerProteinaDeRNAs xs)
+
 obtenerProteinaDeRNA :: CadenaRNA -> [Proteina]
-obtenerProteinas = error "Implementar!!!"
+obtenerProteinaDeRNA xs = obtenerProteinaDeRNAs (limpiarLista (fraccionarCadenaRNA xs))
+
 
 obtenerProteinas :: CadenaDNA -> [Proteina]
-obtenerProteinas = error "Implementar!!!"
--}
+obtenerProteinas xs = (obtenerProteinaDeRNA (transcribir xs)) ++ (obtenerProteinaDeRNA (transcribir (obtenerCadenaReverseDNA xs))) ++ (obtenerProteinaDeRNA (transcribir (complementarCadenaDNA xs))) ++ (obtenerProteinaDeRNA (transcribir (obtenerCadenaReverseDNA(complementarCadenaDNA xs))))
 
 -- Funcion que dado un codon devuelve el correspondiente aminoacido
 traducirCodonAAminoacido:: Codon -> Aminoacido
