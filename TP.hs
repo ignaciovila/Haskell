@@ -28,7 +28,6 @@ complementarBase G = C
 -- Dada una CadenaDNA devuelve la cadena complementaria
 complementarCadenaDNA :: CadenaDNA -> CadenaDNA
 complementarCadenaDNA [] = []
-complementarCadenaDNA [a] = [(complementarBase a)]
 complementarCadenaDNA xs = complementarBase (head xs) : complementarCadenaDNA (tail xs)
 
 -- Dada una CadenaDNA devuelve la cadena reverse
