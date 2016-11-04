@@ -13,7 +13,7 @@ type Codon = (BaseNucleotidica, BaseNucleotidica, BaseNucleotidica)
 
 -- Tipo enumerado para aminoacidos
 data Aminoacido = Phe | Ser | Tyr | Cys | Leu | Trp | Pro | His | Arg | Gln |
-    Ile | Thr | Asn | Lys | Met | Val | Ala | Asp | Gly | Glu deriving Show
+    Ile | Thr | Asn | Lys | Met | Val | Ala | Asp | Gly | Glu deriving (Show, Eq)
 
 -- Una proteina es una lista de aminoacidos
 type Proteina = [Aminoacido]
