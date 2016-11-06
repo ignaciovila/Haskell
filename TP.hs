@@ -1,3 +1,5 @@
+module TP where
+
 -- Tipo enumerado de bases nucleotidicas
 data BaseNucleotidica = A | C | G | T | U deriving Show
 
