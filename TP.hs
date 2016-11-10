@@ -30,12 +30,12 @@ complementarBase G = C
 -- Dada una CadenaDNA devuelve la cadena complementaria
 complementarCadenaDNA :: CadenaDNA -> CadenaDNA
 complementarCadenaDNA [] = []
-complementarCadenaDNA xs = complementarBase (head xs) : complementarCadenaDNA (tail xs)
+complementarCadenaDNA (x:xs) = complementarBase x : complementarCadenaDNA xs
 
 -- Dada una CadenaDNA devuelve la cadena reverse
 obtenerCadenaReverseDNA :: CadenaDNA -> CadenaDNA
 obtenerCadenaReverseDNA [] = []
-obtenerCadenaReverseDNA xs =  obtenerCadenaReverseDNA (tail xs) ++ [(head xs)]
+obtenerCadenaReverseDNA (x:xs) =  obtenerCadenaReverseDNA xs ++ [x]
 
 -- Dada una CadenaDNA devuelve la cadena de RNA resultante de una transcripcion
 transcribir :: CadenaDNA -> CadenaRNA
